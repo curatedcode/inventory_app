@@ -1,0 +1,9 @@
+extends ../layout 
+
+block content 
+  h1= title
+
+  ul
+    for item in items
+      li
+        a(href=`/items/${item._id}`) #{item.name}

@@ -1,7 +1,21 @@
 doctype html
-html
+html(lang='en')
   head
     title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    block sidebar
+      ul(class='')
+        li
+          a(href='/') Home
+        li 
+          a(href='/categories') All Categories
+        li
+          a(href='/items') All Items
+        li
+          a(href='/category/create') Create new item
+        li
+          a(href='/item/create') Create new item
     block content

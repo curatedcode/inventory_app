@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  h1= title
+
+  ul
+    for category in categories
+      li
+        a(href=`/categories/${category._id}`) #{category.name}
