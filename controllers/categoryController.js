@@ -128,3 +128,44 @@ exports.category_update_post = [
     })
   }
 ]
+
+exports.category_delete_get = (req, res, next)=>{
+  async.parallel(
+    {
+      category(callback){
+        Category.findById(req.params.category_id)
+          .exec(callback)
+      },
+      items(callback){
+        Item.find({ category: req.params.category_id })
+          .exec(callback)
+      }
+    },
+    (err, results)=>{
+      if(err){
+        return next(err)
+      }
+
+      res.render("category/category_delete", {
+        title: "Delete Category",
+        category: results.category,
+        items: results.items
+      })
+    }
+  )
+}
+
+exports.category_delete_post = (req, res, next)=>{
+  if(req.body.items.length > 0){
+    const error = "Please delete the items in this category before proceeding"
+    error.status = 404
+    return next(error)
+  }
+  Category.findByIdAndDelete(req.params.category_id)
+    .exec(err => {
+      if(err){
+        return next(err)
+      }
+      res.redirect('/categories')
+    })
+}

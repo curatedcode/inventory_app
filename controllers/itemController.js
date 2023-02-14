@@ -218,3 +218,27 @@ exports.item_update_post = [
     })
   }
 ]
+
+exports.item_delete_get = (req, res, next)=>{
+  Item.findById(req.params.item_id)
+  .exec((err, result)=>{
+    if(err){
+      return next(err)
+    }
+    
+    res.render("item/item_delete", {
+      title: "Delete Item",
+      item: result
+    })
+  })
+}
+
+exports.item_delete_post = (req, res, next)=>{
+  Item.findByIdAndRemove(req.params.item_id)
+    .exec((err)=>{
+      if(err){
+        return next(err)
+      }
+      res.redirect('/items')
+    })
+}
