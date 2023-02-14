@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  h1= title
+
+  form(method="POST" action="")
+    label(for="name") Name:
+    input#name(type="text" placeholder="Name" required=true value=(undefined === name ? '' : name) name="name")
+    button(type="submit") Submit
+  
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

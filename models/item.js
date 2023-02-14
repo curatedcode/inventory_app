@@ -5,8 +5,7 @@ const ItemSchema = new Schema({
   name: String,
   category: {
     type: Schema.Types.ObjectId,
-    ref: "Category",
-    required: true 
+    ref: "Category" 
   },
   description: {
     type: String,

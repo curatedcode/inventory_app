@@ -5,7 +5,11 @@ block content
 
   h3= category.name
 
-  ul
-    for item in items
-      li
-        a(href=`/items/${item._id}`) #{item.name}
+  if items.length < 1
+    li No items in this category
+
+  else
+    ul
+      for item in items
+        li
+          a(href=item.url) #{item.name}
