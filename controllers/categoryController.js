@@ -49,7 +49,12 @@ exports.category_detail = (req, res, next)=>{
 }
 
 exports.category_create_get = (req, res, next)=>{
-  res.render("category/category_form", { title: "Create a Category"})
+  res.render("category/category_form", {
+    title: "Create a Category",
+    category: {
+      name: ''
+    }
+  })
 }
 
 exports.category_create_post = [
@@ -66,7 +71,9 @@ exports.category_create_post = [
     if(!errors.isEmpty()){
       res.render("category/category_form",{
         title: "Create a Category",
-        name: req.body.name,
+        category: {
+          name: req.body.name
+        },
         errors: errors.array()
       })
     }
