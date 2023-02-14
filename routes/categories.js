@@ -9,4 +9,7 @@ router.post("/create", controller.category_create_post)
 
 router.get("/:category_id/", controller.category_detail)
 
+router.get("/:category_id/update", controller.category_update_get)
+router.post("/:category_id/update", controller.category_update_post)
+
 module.exports = router

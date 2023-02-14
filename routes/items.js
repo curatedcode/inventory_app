@@ -9,4 +9,7 @@ router.post('/create', controller.item_create_post)
 
 router.get('/:item_id', controller.item_detail)
 
+router.get('/:item_id/update', controller.item_update_get)
+router.post('/:item_id/update', controller.item_update_post)
+
 module.exports = router

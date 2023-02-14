@@ -1,6 +1,7 @@
 const Item = require('../models/item')
 const Category = require('../models/category')
 const { body, validationResult } = require('express-validator')
+const async = require('async')
 
 exports.item_list = (req, res, next) => {
   Item.find()
@@ -55,9 +56,7 @@ exports.item_create_post = [
     .trim()
     .isLength({ min: 1 })
     .escape()
-    .withMessage("Name must not be empty")
-    .isAlphanumeric()
-    .withMessage("Name must not contain non-alphanumeric characters"),
+    .withMessage("Name must not be empty"),
   body("price")
     .trim()
     .isLength({ min: 1 })
@@ -130,5 +129,92 @@ exports.item_create_post = [
       })
     }
 
+  }
+]
+
+exports.item_update_get = (req, res, next)=>{
+  async.series(
+    {
+      item(callback){
+        Item.findById(req.params.item_id).exec(callback)
+      },
+      catagories(callback){
+        Category.find()
+          .sort([["name", "ascending"]])
+          .exec(callback)
+      }
+    },
+    (err, results)=>{
+      if(err){
+        return next(err)
+      }
+
+      res.render("item/item_form", {
+        title: "Update an Item",
+        item: results.item,
+        categories: results.catagories
+      })
+    }
+  )
+}
+
+exports.item_update_post = [
+  body("name")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Name must not be empty"),
+  body("price")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Price must not be empty")
+    .isNumeric()
+    .withMessage("Price must only contain numbers"),
+  body("number_in_stock")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Number in stock must not be empty")
+    .isNumeric()
+    .withMessage("Number in stock must only contain numbers"),
+  body("description")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Description must not be empty"),
+  (req, res, next)=>{
+    const errors = validationResult(req)
+
+    const item = new Item({
+      _id: req.params.item_id,
+      name: req.body.name,
+      category: req.body.category,
+      price: req.body.price,
+      number_in_stock: req.body.number_in_stock,
+      description: req.body.description
+    })
+    if(!errors.isEmpty()){
+      Category.find()
+        .sort([["name", "ascending"]])
+        .exec((err, result)=>{
+          if(err){
+            return next(err)
+          }
+          res.render("item/item_form", {
+            title: "Update an Item",
+            item: item,
+            categories: result,
+            errors: errors.array()
+          })
+        })
+    }
+
+    Item.findByIdAndUpdate(req.params.item_id, item, {}, (err, item)=>{
+      if(err){
+        return next(err)
+      }
+      res.redirect(item.url)
+    })
   }
 ]

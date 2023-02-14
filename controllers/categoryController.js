@@ -82,3 +82,49 @@ exports.category_create_post = [
     })
   }
 ]
+
+exports.category_update_get = (req, res, next)=>{
+  Category.findById(req.params.category_id)
+    .exec((err, result)=>{
+      if(err){
+        return next(err)
+      }
+      res.render("category/category_form", {
+        title: "Update a Category",
+        category: result
+      })
+    })
+}
+
+exports.category_update_post = [
+  body("name")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("Name must be specified")
+    .isAlphanumeric()
+    .withMessage("Name must not have non-alphanumeric characters"),
+  (req, res, next)=>{
+    const errors = validationResult(req)
+
+    if(!errors.isEmpty()){
+      res.render("category/category_form", {
+        title: "Update a Category",
+        category: req.params.category_id,
+        errors: errors.array()
+      })
+    }
+
+    const category = new Category({
+      _id: req.params.category_id,
+      name: req.body.name
+    })
+
+    Category.findByIdAndUpdate(req.params.category_id, category, {}, (err, category)=>{
+      if(err){
+        return next(err)
+      }
+      res.redirect(category.url)
+    })
+  }
+]
