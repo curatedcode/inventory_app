@@ -4,20 +4,25 @@ block content
   h1= title
 
   form(method="POST" action="")
-    label(for="name") Name:
-    input#name(type="text" placeholder="Name" required=true value=(item.name === undefined ? '' : item.name) name="name")
+    div.form-group
+      label(for="name") Name:
+      input#name(type="text" placeholder="Name" required=true value=(item.name === undefined ? '' : item.name) name="name")
     if categories.length > 0
-      label(for="name") Category:
-      select#category(name="category")
-        for category in categories
-          option(value=category.name) #{category.name}
-    label(for="price") Price:
-    input#price(type="number" required=true value=(undefined === item.price ? 0 : item.price) name="price")
-    label(for="number_in_stock") Number in stock:
-    input#number_in_stock(type="number" required=true value=(undefined === item.number_in_stock ? 0 : item.number_in_stock) name="number_in_stock")
-    label(for="description") Description:
-    textarea#description(placeholder="Description" required=true value=(undefined === item.description ? '' : item.description) name="description")
-    button(type="submit") Submit
+      div.form-group
+        label(for="name") Category:
+        select#category(name="category")
+          for category in categories
+            option(value=category.name) #{category.name}
+    div.form-group
+      label(for="price") Price:
+      input#price(type="number" required=true value=(undefined === item.price ? 0 : item.price) name="price")
+    div.form-group
+      label(for="number_in_stock") Number in stock:
+      input#number_in_stock(type="number" required=true value=(undefined === item.number_in_stock ? 0 : item.number_in_stock) name="number_in_stock")
+    div.form-group
+      label(for="description") Description:
+      textarea#description(placeholder="Description" required=true value=(undefined === item.description ? '' : item.description) name="description")
+    button.submit(type="submit") Submit
   
   if errors
     ul

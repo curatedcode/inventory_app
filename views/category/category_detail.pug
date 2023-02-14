@@ -4,15 +4,16 @@ block content
   h1= title
 
   h3= category.name
+  div.detail
+    a.update(href=`${category.url}/update`) Update Category
+    a.delete(href=`${category.url}/delete`) Delete Category
 
   if items.length < 1
-    li No items in this category
+    ul.detail.detail-blank
+      li No items in this category
 
   else
-    ul
+    ul.detail
       for item in items
         li
           a(href=item.url) #{item.name}
-
-  a(href=`${category.url}/update`) Update Category
-  a(href=`${category.url}/delete`) Delete Category

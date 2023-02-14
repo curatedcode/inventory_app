@@ -1,9 +1,11 @@
 extends ../layout
 
 block content
-  h1= title
+  div.index
+    h1= title
+    a.add(href="/categories/create") Add Category
 
-  ul
+  ul.index
     for category in categories
       li
         a(href=category.url) #{category.name}

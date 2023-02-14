@@ -4,11 +4,17 @@ block content
   h1= title
 
   h3= item.name
+  div.detail
+    a.update(href=`${item.url}/update`) Update Item
+    a.delete(href=`${item.url}/delete`) Delete Item
 
-  div(class="")
-    p Description: #{item.description}
-    span Price: #{item.price}
-    span Number-In-Stock: #{item.number_in_stock}
-
-  a(href=`${item.url}/update`) Update Item
-  a(href=`${item.url}/delete`) Delete Item
+  div.item
+    div
+      span.detail-label Price:
+      span #{item.price}
+    div
+      span.detail-label Number-In-Stock:
+      span #{item.number_in_stock}
+    div.detail-desc
+      span.detail-desc.detail-label Description:
+      p #{item.description}

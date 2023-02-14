@@ -4,9 +4,10 @@ block content
   h1= title
 
   form(method="POST" action="")
-    label(for="name") Name:
-    input#name(type="text" placeholder="Name" required=true value=(undefined === category.name ? '' : category.name) name="name")
-    button(type="submit") Submit
+    div.form-group
+      label(for="name") Name:
+      input#name(type="text" placeholder="Name" required=true value=(undefined === category.name ? '' : category.name) name="name")
+    button.submit(type="submit") Submit
   
   if errors
     ul

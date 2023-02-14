@@ -1,9 +1,11 @@
 extends ../layout 
 
 block content 
-  h1= title
+  div.index
+    h1= title
+    a.add(href='/items/create') Add item
 
-  ul
+  ul.index
     for item in items
       li
         a(href=item.url) #{item.name}

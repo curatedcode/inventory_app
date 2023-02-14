@@ -5,21 +5,18 @@ block content
 
   if items.length
 
-    p #[strong Delete the following items before attempting to delete this category.]
+    p.delete #[strong Delete the following items before attempting to delete this category.]
 
-    div
-      h4 Items
-
-      ul
-      each item in items
-        li 
-          a(href=item.url) #{item.name}
+      ul.detail
+        each item in items
+          li 
+            a(href=item.url) #{item.name}
 
   else
-    p Do you really want to delete this Category?
+    p.delete Do you really want to delete this Category?
 
     form(method='POST' action='')
       div
         input#category(type='hidden',name='category', required='true', value=category.name )
 
-      button(type='submit') Delete
+      button.submit(type='submit') Delete
