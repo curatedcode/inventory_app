@@ -6,4 +6,4 @@ block content
   ul
     for category in categories
       li
-        a(href=`/categories/${category._id}`) #{category.name}
+        a(href=category.url) #{category.name}
